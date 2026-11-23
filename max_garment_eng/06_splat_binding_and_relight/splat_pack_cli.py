@@ -1,4 +1,7 @@
-"""06_splat_binding_and_relight/splat_pack_cli.py — Deterministic SOG v3 & SPZ v4 Packing Wrapper (MIT).
+"""06_splat_binding_and_relight/splat_pack_cli.py — Deterministic SOG v3 & SPZ v4 Packing Wrapper.
+
+Licence: the upstream dependency `playcanvas/splat-transform` is MIT; this wrapper script is
+covered by this repository's LICENSE.
 
 Preserves explicit Gaussian slot ordering (i <-> i) so index-matched pose morphs and per-garment ID masks
 stay aligned without nearest-neighbor jumps. Encodes garment_id:u16 in (R, G) with A = 255 (-exact lossless WebP)

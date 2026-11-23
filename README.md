@@ -2,6 +2,33 @@
 
 Python tools for preparing garments, draping them on a mannequin and measuring whether the result is acceptable.
 
+## Visual Proof -> Source Code
+
+**Status:** the single-layer ringer tee `BS-RINGER-001` passes the gates (0 intersections, stretch p99 = 1.076 on the current re-baked GLB). Multi-layer trouser + top solver stability is active R&D and does not pass yet. The gates check penetration, edge stretch and collar seating; they do not check seam closure.
+
+### Ringer tee: GPU cloth solve and stretch view
+![Ringer tee reel poster](showcase/ringer_swag01_poster.webp)
+
+[Watch the 72-frame reel (MP4)](showcase/ringer_swag01_h264.mp4). It shows an earlier solve of the same garment; its caption gives that run's p99, 1.0734.
+
+### Mesh and Gaussian splat alignment
+![GLB, SOG and SPZ QA sheet](showcase/scratch_studio_bs_ringer_qa.png)
+
+GLB, 360,000-splat SOG, SPZ, and the GLB wireframe over the SOG. Bounding-box width and depth agree within 0.4 mm. Height does not: the splats reach about 30 mm below the soles.
+
+### Zipper macro
+![Zipper hover-zoom loop](showcase/m7_hover_zoom_loop.avif)
+
+Rigid interlocking teeth with 0.08 mm minimum closed clearance (gate limit 0.05 mm).
+
+| Visual | Rendered by | Built on |
+|---|---|---|
+| Ringer poster and reel | [`run_c0_optix_lookdev_and_reel.py`](max_garment_eng/COLAB_MEGA_SPRINT/scripts/run_c0_optix_lookdev_and_reel.py) | Solve: [`newton_cloth_template.py`](max_garment_eng/03_gpu_cloth_solver/newton_cloth_template.py) via [`run_c0_ringer_benchmark.py`](max_garment_eng/COLAB_MEGA_SPRINT/scripts/run_c0_ringer_benchmark.py). Gate maths: [`canon_geometry_kernels.py`](https://github.com/411tmnd-star/maximus-character-rig/blob/main/maximus_engine/colab_stage/canon_geometry_kernels.py) |
+| QA sheet | [`qa_bs_ringer.py`](max_garment_eng/07_web_scratch_studio/qa_bs_ringer.py) | Viewer: [`spark_hybrid_viewer.js`](max_garment_eng/07_web_scratch_studio/spark_hybrid_viewer.js) |
+| Zipper loop | [`m7_zipper_macro.py`](https://github.com/411tmnd-star/maximus-character-rig/blob/main/maximus_engine/colab_stage/m7_zipper_macro.py) | Geometry: [`zipper_engine.py`](https://github.com/411tmnd-star/maximus-character-rig/blob/main/maximus_engine/colab_stage/zipper_engine.py) |
+
+The viewer depends on Three.js, `@sparkjsdev/spark`, a page and a morph module that are not included here.
+
 ## Main parts (`max_garment_eng/`)
 - `01_catalog_ingest`: garment repair and preflight checks
 - `02_alignment_and_collar`: collar alignment and rest-length adapters
@@ -9,6 +36,7 @@ Python tools for preparing garments, draping them on a mannequin and measuring w
 - `04_clearance_gates`: edge-stretch, float64 winding-number penetration and collar gates
 - `05_morph_and_export`: size morphs and compact GLB export
 - `06_splat_binding_and_relight`: experimental Gaussian-splat binding and packing
+- `07_web_scratch_studio`: splat viewer and its QA script
 
 Other folders hold earlier garment-engine, collar, rhinestone placement, avatar and clearance-diagnostic work.
 
